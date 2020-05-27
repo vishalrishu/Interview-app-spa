@@ -1,0 +1,36 @@
+
+<h1>New Interview</h1>
+
+<%= form_for @interview, html: { multipart: true } do |form| %>
+    <p>
+      <%= form.label :description %>
+      <%= form.text_field :description %>
+    </p>
+    <p>
+    <%= form.label :participants %><br />
+    <% for participant in Participant.all %>
+      <%= check_box_tag "interview[participant_ids][]", participant.id, @interview.participants.include?(participant) %>
+      <%=h participant.name %><br />
+    <% end %>
+  </p>
+    <p>
+        <%= label_tag(:pdf, "Resume") %> 
+    
+        <%= form.file_field :pdf %>
+    </p>
+    <p>
+        <%= label_tag(:start_time, "Start Time") %> 
+        <%= form.date_select :start_time %>
+        <%= form.time_select :start_time, :ignore_date => true %></br>
+    </p>
+    <p>
+        <%= label_tag(:end_time, "End Time") %>
+        <%= form.date_select :end_time %>
+        <%= form.time_select :end_time, :ignore_date => true %>
+    </p>
+    <p>
+      <%= form.submit %>
+    </p>
+  <% end %>
+  
+<%= link_to "Interview List",interviews_path%>
